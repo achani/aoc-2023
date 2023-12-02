@@ -21,4 +21,4 @@ with open(input_path, 'r') as f:
         value = find_match(line, digits) * 10 + find_match(line[::-1], digits_r)
         #print(value)
         ans += value
-    print(ans)
+print(ans)
