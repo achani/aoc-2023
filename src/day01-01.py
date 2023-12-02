@@ -1,5 +1,7 @@
-from os import path
-input_path = "/Users/ajay/dev/projects/AdventOfCode2023/input/day01.txt"
+from pathlib import Path
+
+input_path = Path(__file__).parent.parent / "input" / "day01.txt"
+
 
 with open(input_path, 'r') as f:
     lines = f.read().splitlines()
