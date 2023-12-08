@@ -1,59 +1,38 @@
-from functools import lru_cache
+"""Solution to Advent of Code 2023 Day4"""
 
 
-
-def evaluate_card_part1(card):
-    card_values = card.split(":")[1]
-    parts = card_values.split("|")
-    winning_nos, my_nos = parts[0].split(), parts[1].split()
-    matching_nos = list(set(winning_nos) & set(my_nos))
-
-    print(card) 
-    
-    ans = (2 ** (len(matching_nos) - 1)) if len(matching_nos) > 0 else 0 
-    print(f'{",".join(matching_nos)} ({len(matching_nos)}) ==> {ans}')
-    return ans
-
-@lru_cache(maxsize=None)
-def evaluate_card_part2(card_no):
-    card = lines[card_no]
-    card_values = card.split(":")[1]
-    parts = card_values.split("|")
-    winning_nos, my_nos = parts[0].split(), parts[1].split()
-    matching_nos = list(set(winning_nos) & set(my_nos))
-    print(matching_nos)
-    return len(matching_nos)
+def get_match_count(card):
+    """Get the no of winning numbers on the card"""
+    left, right = card.split("|")
+    winning = [int(i) for i in left.split(":")[1].split()]
+    card_nos = [int(i) for i in right.split()]
+    return len(list(set(winning) & set(card_nos)))
 
 
 def solve_part1():
+    """Solution for Part 1"""
     ans = 0
-    for line in lines: 
-       ans += evaluate_card_part1(line)
+    for line in lines:
+        match_count = get_match_count(line)
+        if match_count > 0:
+            ans += 2 ** (match_count - 1)
     print("Part 1: " + str(ans))
 
 
-
-queue = []
-
-
 def solve_part2():
+    """Solution for Part 2"""
     ans = 0
-    queue = [i for i in range(len(lines))]
-    counter = 0
-    while len(queue) > 0: 
-        
-        card = queue.pop(0)
-        matches = evaluate_card_part2(card)
-        for i in range(matches): 
-            queue.append(i+card+1)
-        ans += 1
-        if ans % 50000 == 0:
-            print(f"Processed card {card}. Matches: {(matches)} Add card no. {i+card+1}. | Queue Length: {len(queue)} | Current Total : {ans}")
-        
+    card_counts = [1] * len(lines)
+
+    for i, card in enumerate(lines):
+        match_count = get_match_count(card)
+        for j in range(match_count):
+            card_counts[i + 1 + j] += card_counts[i]
+    ans = sum(card_counts)
     print("Part 2:" + str(ans))
 
-lines = None
-with open("input.txt", 'r') as f:
+
+with open("input.txt", "r", encoding="UTF8") as f:
     lines = f.read().splitlines()
     solve_part1()
     solve_part2()
