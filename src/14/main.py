@@ -62,12 +62,12 @@ def spin_and_get_score(cycles, grid):
 
     while cycles_completed < total_cycles:
         grid = spin(grid)
-        #print(f"Cycles Completed: {cycles_completed}, score: {score(grid)}")
+        # print(f"Cycles Completed: {cycles_completed}, score: {score(grid)}")
         cycles_completed += 1
         hash = tuple(tuple(v for v in row) for row in grid)
         if hash in HISTORY:
             last_seen = HISTORY[hash]
-            #print(f"Found in history. {cycles_completed} = {last_seen}")
+            # print(f"Found in history. {cycles_completed} = {last_seen}")
             freq = cycles_completed - last_seen
             cycles_to_go = total_cycles - cycles_completed
             cycles_completed += freq * (cycles_to_go // freq)

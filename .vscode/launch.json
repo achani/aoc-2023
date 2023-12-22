@@ -12,7 +12,6 @@
       "console": "integratedTerminal",
       "justMyCode": true,
       "cwd": "${fileDirname}",
-      
     }
   ]
 }

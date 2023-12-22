@@ -18,6 +18,7 @@ class HandType(Enum):
             return self.value < other.value
         return NotImplemented
 
+
 class Hand:
     SUITS_ORDER = {
         "A": 13,
@@ -52,13 +53,10 @@ class Hand:
 
     JOCKER = "J"
 
-
     def contains_jocker(self):
         return Hand.JOCKER in self.hand
 
-
     def parse_without_jocker(self, hand):
-
         hist = Counter(hand).most_common()
         if hist[0][1] == 5:
             return HandType.FiveOfAKind

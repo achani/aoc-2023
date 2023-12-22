@@ -13,9 +13,7 @@ def find_solution(t, max_distance):
 
     root1 = (-1 * b + discriminant) / (2.0 * a)
     root2 = (-1 * b - discriminant) / (2.0 * a)
-    # print(root1,root2)
     solution = (math.ceil(root2) - math.floor(root1)) - 1
-    # print(f"Race-> {t}:{max_distance} :: {solution}")
     return solution
 
 
@@ -31,8 +29,6 @@ with open("input.txt", "r", encoding="UTF8") as f:
 
 races = zip(times, distances)
 part1 = reduce(lambda x, y: x * y, [find_solution(race[0], race[1]) for race in races])
-print(f"Part 1: {part1}")
-
 part2 = find_solution(time_2, distance_2)
-
+print(f"Part 1: {part1}")
 print(f"Part 2: {part2}")
