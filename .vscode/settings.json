@@ -2,5 +2,8 @@
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter"
   },
-  "python.formatting.provider": "none"
+  "python.formatting.provider": "none",
+  "pylint.args": [
+    "\"pylint.args\": [\"--disable=C0116\",\"--disable=C0114\",  \"--max-line-length=200\"]"
+  ]
 }
