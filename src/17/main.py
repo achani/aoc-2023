@@ -19,6 +19,7 @@ procedure uniform_cost_search(start) is
                 replace existing node with n
 """
 from queue import PriorityQueue
+
 #Direction of movement can be Forward, Left or Right as Backward is not allowed. 
 #We need to ensure there are only max "N" steps in a direction beyond which we must turn. 
 #We need to take care of these conditions when deciding which are the next possible neighbors. 
@@ -31,7 +32,6 @@ def get_neighbors(node, min_forward_steps, max_forward_steps):
     neighbors.append((loss + grid[r][c + 1], r, c+1, r,c, 1))
     neighbors.append((loss + grid[r + 1][c], r+1, c, r,c, 1))
     return neighbors
-
   #Add forward if allowed
   if forward_steps < max_forward_steps:
       r_nxt = r + (r - r_prv)
@@ -41,7 +41,6 @@ def get_neighbors(node, min_forward_steps, max_forward_steps):
   
   if forward_steps < min_forward_steps:
     return neighbors
-  
   #Add left and right
   offsets=[]
   if c == c_prv:
@@ -59,14 +58,11 @@ def get_neighbors(node, min_forward_steps, max_forward_steps):
 def uniform_cost_search(src, dest,min_forward_steps,max_forward_steps,min_steps_to_stop):
   src_r,src_c = src
   dest_r, dest_c = dest
-
   frontier = PriorityQueue()
   frontier.put((0, src_r,src_c,None, None,0))
   expanded = set()
-
   while True:
     if frontier.empty():
-      #No solution.
       raise Exception("No Solution possible.")
     current = frontier.get()
     hl,r,c,_,_,steps_forward = current
@@ -86,10 +82,7 @@ with open("input.txt", "r", encoding="UTF8") as f:
 
 grid = [[int(c) for c in row] for row in lines]
 R, C = len(grid), len(grid[0])
-
-start = (0,0)
-dest = (R-1,C-1)
-
+start,dest = (0,0), (R-1,C-1)
 print(f"Part 1: {uniform_cost_search(start,dest,1,3,1)}")
 print(f"Part 2: {uniform_cost_search(start,dest,4,10,4)}")
 
