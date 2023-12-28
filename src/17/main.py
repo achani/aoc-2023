@@ -19,9 +19,6 @@ procedure uniform_cost_search(start) is
                 replace existing node with n
 """
 from queue import PriorityQueue
-
-from dataclasses import dataclass, field
-
 #Direction of movement can be Forward, Left or Right as Backward is not allowed. 
 #We need to ensure there are only max "N" steps in a direction beyond which we must turn. 
 #We need to take care of these conditions when deciding which are the next possible neighbors. 
