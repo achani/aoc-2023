@@ -18,9 +18,6 @@ procedure uniform_cost_search(start) is
             else if n is in frontier with higher cost
                 replace existing node with n
 """
-
-import math
-from heapq import heappush, heappop
 from queue import PriorityQueue
 
 from dataclasses import dataclass, field
@@ -73,7 +70,7 @@ def uniform_cost_search(src, dest,min_forward_steps,max_forward_steps,min_steps_
   while True:
     if frontier.empty():
       #No solution.
-      return math.inf
+      raise Exception("No Solution possible.")
     current = frontier.get()
     hl,r,c,_,_,steps_forward = current
     if r == dest_r and c == dest_c and steps_forward >= min_steps_to_stop:
