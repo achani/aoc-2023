@@ -27,6 +27,7 @@ def intersect_ranges(r1,r2):
 def get_acceptable_ranges(current_range,workflow):
   conditions = workflows[workflow]
   acc_ranges=[]
+  #Example: px{a<2006:qkq,m>2090:A,rfg}
   for condition in conditions[:-1]:
     result = condition.split(":")[1]
     param, oper, val = condition[0],condition[1],condition.split(":")[0][2:]
@@ -49,10 +50,8 @@ def get_acceptable_ranges(current_range,workflow):
       current_range[param] = param_range_false
     else:
       return acc_ranges
-    
-  if conditions[-1] == "R":
-    return acc_ranges
-  elif param_range_false:
+  #handle final catch-all decision
+  if param_range_false and conditions[-1] != "R":
     if conditions[-1] == "A":
       acc_ranges.append(deepcopy(current_range))
     else:
