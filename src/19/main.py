@@ -24,13 +24,10 @@ def intersect_ranges(r1,r2):
   return (low,high) if high > low else None
 
 
-def get_acceptable_ranges(current_range,conditions):
-  if not current_range:
-    current_range = {"x": (1, 4001), "m": (1, 4001) , "a": (1, 4001), "s": (1, 4001)}
-
+def get_acceptable_ranges(current_range,workflow):
+  conditions = workflows[workflow]
   acc_ranges=[]
   for condition in conditions[:-1]:
-    param_range_true = param_range_false = None
     result = condition.split(":")[1]
     param, oper, val = condition[0],condition[1],condition.split(":")[0][2:]
     val = int(val)
@@ -47,7 +44,7 @@ def get_acceptable_ranges(current_range,conditions):
       if result == "A": 
         acc_ranges.append(deepcopy(current_range))
       else:
-        acc_ranges.extend(get_acceptable_ranges(deepcopy(current_range), workflows[result]))
+        acc_ranges.extend(get_acceptable_ranges(deepcopy(current_range), result))
     if param_range_false: 
       current_range[param] = param_range_false
     else:
@@ -59,7 +56,7 @@ def get_acceptable_ranges(current_range,conditions):
     if conditions[-1] == "A":
       acc_ranges.append(deepcopy(current_range))
     else:
-      acc_ranges.extend(get_acceptable_ranges(deepcopy(current_range),workflows[conditions[-1]]))
+      acc_ranges.extend(get_acceptable_ranges(deepcopy(current_range),conditions[-1]))
   return acc_ranges
 
 
@@ -80,9 +77,11 @@ def solve_part1():
 
 
 def solve_part2():
-  workflow = workflows["in"]
+  workflow = "in"
+  current_range = {"x": (1, 4001), "m": (1, 4001) , "a": (1, 4001), "s": (1, 4001)}
+
   ans = 0 
-  acceptable_ranges = get_acceptable_ranges(None, workflow)
+  acceptable_ranges = get_acceptable_ranges(current_range, workflow)
   for rng in acceptable_ranges:
     ans += (rng["x"][1] - rng["x"][0]) * (rng["m"][1] - rng["m"][0]) * (rng["a"][1] - rng["a"][0]) * (rng["s"][1] - rng["s"][0])
   print(f"Part 2: {ans}")
